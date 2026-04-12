@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>AI Hologram Assistant</title>
+    <style>
+        body {
+            background-color: black;
+            color: cyan;
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin-top: 100px;
+        }
+
+        h1 {
+            margin-bottom: 30px;
+        }
+
+        input {
+            width: 60%;
+            padding: 12px;
+            font-size: 16px;
+            border: none;
+            outline: none;
+        }
+
+        button {
+            padding: 12px 20px;
+            font-size: 16px;
+            cursor: pointer;
+            border: none;
+            background-color: cyan;
+            color: black;
+            margin-left: 10px;
+        }
+
+        #response {
+            margin-top: 40px;
+            width: 60%;
+            margin-left: auto;
+            margin-right: auto;
+            font-size: 18px;
+            white-space: pre-wrap;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>AI Hologram Assistant</h1>
+
+    <input id="message" type="text" placeholder="Ask something..." />
+    <button onclick="sendMessage()">Send</button>
+
+    <div id="response"></div>
+
+    <script>
+        async function sendMessage() {
+            const message = document.getElementById("message").value;
+
+            const response = await fetch("/chat", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({ message: message })
+            });
+
+            const data = await response.json();
+            document.getElementById("response").innerText = data.reply;
+        }
+    </script>
+
+</body>
+</html>
